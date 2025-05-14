@@ -1,0 +1,67 @@
+<section class="flex flex-column">
+    <div
+        style="background-color: rgb(79, 79, 79);" 
+        class="p-2 border border-surface rounded-border w-60">
+        <ul  
+            class="list-none flex flex-col flex-wrap gap-2 p-0 m-0">
+            <li
+                *ngFor="let product of availableProducts"
+                class="p-2 rounded-border shadow-sm list-horizontal"
+                style="background-color: blanchedalmond; color: black;"
+                pDraggable
+                (onDragStart)="dragStart(product)"
+                (onDragEnd)="dragEnd()">
+                {{product.name}}
+            </li>
+        </ul>
+    </div>
+    <div 
+        style="background-color: rgb(88, 65, 37);"
+        class="border-surface rounded-border" 
+        pDroppable (onDrop)="drop()">
+        <p 
+        class="text-center border-surface">
+            Drop Zone
+        </p>
+    </div>
+    <div>
+        <ul 
+            class="list-none flex flex-column gap-2 p-0 m-0 flex-wrap"
+            [style]="'background-color: rgb(79, 79, 79); color: black'"
+            *ngIf="selectedProducts" >
+            <li *ngFor="let product of selectedProducts" class="p-2 rounded-border shadow-sm">
+                <div class="flex flex-row gap-2">
+                    <input type="number" style="width: 3rem;">
+                    {{product.name}}
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <section class="flex flex-row gap-3">
+            <input-text
+                label="Elija el nombre del set"
+                [formControl]="nameSetOfExercise"
+            />
+            <custom-button
+                [label]="'Guardar'"
+                (clickAction)="saveGroupOfExercises()"
+            />
+        </section>
+        <section>
+            <ul 
+                class="list-none flex gap-2 p-0 m-0 flex-wrap"
+                [style]="'background-color: rgb(79, 79, 79); color: black'"
+                *ngIf="selectedProducts">
+                <li *ngFor="let exercise of setOfExercises" class="p-2 rounded-border shadow-sm">
+                    <div
+                        style="background-color: beige;"
+                        class="flex flex-row gap-2 p-2 diamante">
+                        {{exercise.name}}
+                        <p-checkbox [binary]="true" />
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+</section>
