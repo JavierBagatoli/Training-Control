@@ -16,13 +16,14 @@
       class="w-9 flex flex-row justify-content-around">
       @for (item of weeks; track $index; let i = $index) {
         <div
-        (click)="idDaySelected = i || 0"
+          (click)="selectDay(i)"
           class="w-full text-center"
           [class.selected-column]="item.id === idDaySelected"
         >
           <h1 
             style="color: black;">{{item.name}}</h1>
-            <list-of-exercises/>
+            <list-of-exercises
+              [data]="item.activity"/>
         </div>
       }
     </section>

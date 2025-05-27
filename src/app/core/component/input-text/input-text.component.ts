@@ -1,7 +1,7 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FloatLabel } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
     selector: 'input-text',
@@ -18,7 +18,7 @@ import { FloatLabel } from 'primeng/floatlabel';
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        FloatLabel]
+        InputTextModule]
 })
 export class InputTextComponent implements OnInit {
     label = input.required<string>()

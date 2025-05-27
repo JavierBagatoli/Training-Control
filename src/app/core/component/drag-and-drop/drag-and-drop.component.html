@@ -29,16 +29,25 @@
             class="list-none flex flex-column gap-2 p-0 m-0 flex-wrap"
             [style]="'background-color: rgb(79, 79, 79); color: black'"
             *ngIf="selectedProducts" >
-            <li *ngFor="let product of selectedProducts" class="p-2 rounded-border shadow-sm">
-                <div class="flex flex-row gap-2">
-                    <input type="number" style="width: 3rem;">
-                    {{product.name}}
-                </div>
-            </li>
+            @for (product of selectedProducts; track $index; let i = $index) {
+                <li class="p-2 rounded-border shadow-sm">
+                    <div 
+                        class="flex flex-row gap-2">
+                        @if(formGroup.controls[`amountOfExercise${i}`] !== undefined){
+                        <input
+                            [formControl]="controlItem(i)"
+                            type="number"
+                            style="width: 3rem;"
+                            (blur)="setAmountOfExercise(i, $event)"/>
+                        {{product.name}}
+                        }
+                    </div>
+                </li>
+            }
         </ul>
     </div>
     <div>
-        <section class="flex flex-row gap-3">
+        <section class="flex flex-row justify-content-between align-content-center m-2">
             <input-text
                 label="Elija el nombre del set"
                 [formControl]="nameSetOfExercise"
@@ -58,7 +67,9 @@
                         style="background-color: beige;"
                         class="flex flex-row gap-2 p-2 diamante">
                         {{exercise.name}}
-                        <p-checkbox [binary]="true" />
+                        <p-checkbox 
+                            (onChange)="setList(exercise)"
+                            [binary]="true" />
                     </div>
                 </li>
             </ul>

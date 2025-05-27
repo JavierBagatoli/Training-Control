@@ -1,17 +1,15 @@
-<div style="background-color: rgb(126, 95, 95);" class="m-3">
-    <section>
-        <h3 (click)="isOpenDetail = !isOpenDetail">Nombre Lindo</h3>
-        @if(isOpenDetail){
-        <p-divider/>
-        <div>
-            <ul>
-                <li>ahhh</li>
-                <li>ehhh</li>
-                <li>ihhh</li>
-                <li>ohhh</li>
-                <li>uhhh</li>
-            </ul>
-        </div>
-        }
-    </section>
-</div>
+@for (exer of data(); track $index) {
+    <div style="background-color: rgb(126, 95, 95);" class="m-3">
+        <section>
+            <h3 (click)="isOpenDetail = !isOpenDetail">{{exer.name}}</h3>
+            <p-divider/>
+            <div>
+                <ul>
+                    @for (ex of exer.listOfExercises; track $index) {
+                        <li>{{ex.amount}} - {{ex.name}}</li>
+                    }
+                </ul>
+            </div>
+        </section>
+    </div>
+}

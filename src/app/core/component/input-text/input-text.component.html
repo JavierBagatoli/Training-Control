@@ -1,11 +1,9 @@
-<div class="card">
-    <p-floatlabel class="height">
-        <input 
-            (blur)="action()"
-            pInputText id="over_label"
-            class="height"
-            [formControl]="formControl()"
-            autocomplete="in" />
-        <label for="over_label">{{label()}}</label>
-    </p-floatlabel>
+<div class="flex flex-row align-content-center">
+    <input 
+        pSize="large"
+        pInputText
+        [formControl]="formControl()"
+        type="text"
+        placeholder="{{label()}}"
+        />
 </div>

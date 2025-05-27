@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DragDropModule } from 'primeng/dragdrop';
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
 import { InputTextComponent } from "../input-text/input-text.component";
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Exercise, ListExercises } from '../../models/exercises.interface';
+import { exercisesActions } from '../../redux/actions/exercises.action';
+import { ExercisesStore } from '../../redux/store/exercises.store';
 
 @Component({
     selector: 'drag-and-drop',
@@ -17,29 +21,39 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
         }`
     ],
     standalone: true,
-    imports: [DragDropModule, CommonModule, CheckboxModule, CustomButtonComponent, InputTextComponent]
+    imports: [
+        DragDropModule,
+        CommonModule,
+        CheckboxModule,
+        CustomButtonComponent,
+        InputTextComponent,
+        ReactiveFormsModule,
+        InputTextComponent,
+        FormsModule
+    ]
 })
 export class DragDropBasicDemo implements OnInit {
+    private readonly store = inject(
+        Store<{
+            excersices: ExercisesStore
+        }>
+    )
+
     availableProducts: any[] | undefined;
 
-    selectedProducts: {
-        id: number,
-        name: string,
-    }[]= [];
+    selectedProducts: Exercise[] = [];
 
     draggedProduct: any | undefined | null;
 
-    setOfExercises: {
-        name: string,
-        listOfExercises: {
-            id: number,
-            name: string,
-        }[]
-    }[]  = []
+    setOfExercises: ListExercises[] = []
 
-    form = new FormGroup({
-        nameSetOfExercise: new FormControl<string | null>(null, Validators.required)
-    })
+    formGroup: FormGroup;
+    
+    constructor(private _fb: FormBuilder){
+        this.formGroup = this._fb.group({
+            nameSetOfExercise: new FormControl<string | null>(null, Validators.required)
+        });
+    }
 
     ngOnInit() {
         this.selectedProducts = [];
@@ -73,11 +87,19 @@ export class DragDropBasicDemo implements OnInit {
             this.selectedProducts = [...(this.selectedProducts as any[]), this.draggedProduct];
             this.availableProducts = this.availableProducts?.filter((val, i) => i != draggedProductIndex);
             this.draggedProduct = null;
+            
+            this.formGroup.addControl(
+                `amountOfExercise${this.selectedProducts.length-1}`,
+                new FormControl(0,[Validators.required, Validators.min(0)]));
         }
     }
 
     get nameSetOfExercise(){
-        return this.form.controls['nameSetOfExercise']
+        return this.formGroup.controls['nameSetOfExercise'] as FormControl
+    }
+
+    controlItem(id: number): FormControl{
+        return this.formGroup.controls[`amountOfExercise${id}`] as FormControl
     }
 
     dragEnd() {
@@ -95,11 +117,23 @@ export class DragDropBasicDemo implements OnInit {
         return index;
     }
 
-    saveGroupOfExercises(){
+    saveGroupOfExercises():void{
         this.setOfExercises.push( {
             name: this.nameSetOfExercise!.value!,
             listOfExercises: this.selectedProducts
         });
-        this.form.reset();
+        this.selectedProducts = [];
+        this.formGroup.reset();
+    }
+
+    setAmountOfExercise(id: number, $event: any):void{
+        this.selectedProducts[id].amount = this.formGroup.controls[`amountOfExercise${id}`].value
+        console.log(">>",this.selectedProducts)
+    }
+
+    setList(list : any):void{
+        this.store.dispatch(
+            exercisesActions.setListOfExercises({list: list})
+        )
     }
 }
