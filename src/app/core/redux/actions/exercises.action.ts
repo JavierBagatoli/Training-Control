@@ -6,6 +6,6 @@ export const exercisesActions = createActionGroup({
     events: {
         'Restart':emptyProps(),
 
-        'Set List of Exercises': props<{list: ListExercises}>()
+        'Set List of Exercises': props<{list: ListExercises | null}>()
     }
 })

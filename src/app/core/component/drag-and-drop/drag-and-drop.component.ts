@@ -48,6 +48,8 @@ export class DragDropBasicDemo implements OnInit {
     setOfExercises: ListExercises[] = []
 
     formGroup: FormGroup;
+
+    idListPackExercises: number = -1
     
     constructor(private _fb: FormBuilder){
         this.formGroup = this._fb.group({
@@ -128,12 +130,22 @@ export class DragDropBasicDemo implements OnInit {
 
     setAmountOfExercise(id: number, $event: any):void{
         this.selectedProducts[id].amount = this.formGroup.controls[`amountOfExercise${id}`].value
-        console.log(">>",this.selectedProducts)
     }
 
-    setList(list : any):void{
+    setList(list : any, id : number):void{
+        console.log("Limpiar",this.idListPackExercises, id)
+        if(this.idListPackExercises !== id){
+            this.store.dispatch(
+                exercisesActions.setListOfExercises({list: list})
+            )
+            this.idListPackExercises = id;
+            return
+        }
+
+        console.log("Limpiar",this.idListPackExercises, id)
         this.store.dispatch(
-            exercisesActions.setListOfExercises({list: list})
+            exercisesActions.setListOfExercises({list: null})
         )
+        this.idListPackExercises = -1;
     }
 }

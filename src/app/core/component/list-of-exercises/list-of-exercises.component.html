@@ -1,15 +1,23 @@
-@for (exer of data(); track $index) {
-    <div style="background-color: rgb(126, 95, 95);" class="m-3">
-        <section>
-            <h3 (click)="isOpenDetail = !isOpenDetail">{{exer.name}}</h3>
+@for (exer of data(); track $index; let i = $index) {
+    <div style="background-color: rgb(126, 95, 95);" class="m-3 border-round-md">
+        <section class="flex flex-column">
+            <h3 
+                class="-mb-2"
+                (click)="setIdsOpen(i)">
+                {{exer.name}}
+            </h3>
             <p-divider/>
-            <div>
-                <ul>
-                    @for (ex of exer.listOfExercises; track $index) {
-                        <li>{{ex.amount}} - {{ex.name}}</li>
-                    }
-                </ul>
+            @if(listIdsOpen.includes(i)){
+            <div
+                style="text-align: start;"
+                class="flex flex-column justify-content-start">
+                @for (ex of exer.listOfExercises; track $index) {
+                    <p class="mx-2 mt-0 mb-1 justify-content-start">
+                        {{ex.amount}} - {{ex.name}}
+                    </p>
+                }
             </div>
+            }
         </section>
     </div>
 }

@@ -23,6 +23,15 @@ import { ListExercises } from '../../models/exercises.interface';
 export class ListOfExercisesComponent implements OnInit {
     isOpenDetail: boolean = false;
     data = input<ListExercises[]>()
+    listIdsOpen : number[] = []
 
     ngOnInit() {}
+
+    setIdsOpen(id:number):void{
+        if(!this.listIdsOpen.includes(id)){
+            this.listIdsOpen.push(id)
+        }else{
+            this.listIdsOpen = this.listIdsOpen.filter(i => i !==id)
+        }
+    }
 }

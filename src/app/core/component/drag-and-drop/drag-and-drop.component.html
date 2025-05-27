@@ -62,16 +62,20 @@
                 class="list-none flex gap-2 p-0 m-0 flex-wrap"
                 [style]="'background-color: rgb(79, 79, 79); color: black'"
                 *ngIf="selectedProducts">
-                <li *ngFor="let exercise of setOfExercises" class="p-2 rounded-border shadow-sm">
-                    <div
-                        style="background-color: beige;"
-                        class="flex flex-row gap-2 p-2 diamante">
-                        {{exercise.name}}
-                        <p-checkbox 
-                            (onChange)="setList(exercise)"
-                            [binary]="true" />
-                    </div>
-                </li>
+                @for (exercise of setOfExercises; track $index; let i = $index) {
+                    <li 
+                        (click)="setList(exercise, i)"
+                        class="p-2 rounded-border shadow-sm">
+                        <div
+                            style="background-color: beige;"
+                            class="flex flex-row gap-2 p-2 diamante">
+                            {{exercise.name}}
+                            <p-checkbox 
+                                [binary]="true"
+                            />
+                        </div>
+                    </li>
+                }
             </ul>
         </section>
     </div>
