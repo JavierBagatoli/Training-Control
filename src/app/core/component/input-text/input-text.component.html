@@ -1,9 +1,12 @@
-<div class="flex flex-row align-content-center">
+<div class="flex flex-row align-content-center w-full">
+    @if(formControl().getRawValue() !== undefined){
     <input 
+        class="w-full"
         pSize="large"
         pInputText
         [formControl]="formControl()"
         type="text"
         placeholder="{{label()}}"
         />
+    }
 </div>

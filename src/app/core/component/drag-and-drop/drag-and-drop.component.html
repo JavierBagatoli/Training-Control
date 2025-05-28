@@ -1,18 +1,27 @@
-<section class="flex flex-column">
+<section class="flex flex-column m-0">
     <div
         style="background-color: rgb(79, 79, 79);" 
         class="p-2 border border-surface rounded-border w-60">
+            <input-text
+                class="flex flex-row w-full"
+                id="filter-input"
+                label="Filtra"
+                [formControl]="filter"
+            />
         <ul  
-            class="list-none flex flex-col flex-wrap gap-2 p-0 m-0">
-            <li
-                *ngFor="let product of availableProducts"
-                class="p-2 rounded-border shadow-sm list-horizontal"
-                style="background-color: blanchedalmond; color: black;"
-                pDraggable
-                (onDragStart)="dragStart(product)"
-                (onDragEnd)="dragEnd()">
-                {{product.name}}
-            </li>
+            class="list-none flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
+            @for (product of availableProducts; track $index; let i = $index) {
+                @if(product.name.toLowerCase().includes(filter.value.toLowerCase()) || filter.value === ''){
+                <li
+                    class="p-2 rounded-border shadow-sm list-horizontal"
+                    style="background-color: blanchedalmond; color: black;"
+                    pDraggable
+                    (onDragStart)="dragStart(product)"
+                    (onDragEnd)="dragEnd()">
+                    {{product.name}}
+                </li>
+                }
+            }
         </ul>
     </div>
     <div 
@@ -48,10 +57,12 @@
     </div>
     <div>
         <section class="flex flex-row justify-content-between align-content-center m-2">
+            
             <input-text
                 label="Elija el nombre del set"
                 [formControl]="nameSetOfExercise"
             />
+            
             <custom-button
                 [label]="'Guardar'"
                 (clickAction)="saveGroupOfExercises()"

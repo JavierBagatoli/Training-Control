@@ -1,3 +1,27 @@
 .height{
     height: 2rem;
 }
+
+.background-red {
+	background: linear-gradient(-45deg, #575453, #613445) !important;
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+.background-green {
+	background: linear-gradient(-45deg, #545753, #34613f) !important;
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

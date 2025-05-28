@@ -7,6 +7,7 @@ import { ListExercises } from '../../models/exercises.interface';
 @Component({
     selector: 'list-of-exercises',
     templateUrl: './list-of-exercises.component.html',
+    styleUrl: './list-of-exercises.component.scss',
     styles: [
         `:host ::ng-deep {
             [pDraggable] {
@@ -23,7 +24,9 @@ import { ListExercises } from '../../models/exercises.interface';
 export class ListOfExercisesComponent implements OnInit {
     isOpenDetail: boolean = false;
     data = input<ListExercises[]>()
-    listIdsOpen : number[] = []
+    listIdsOpen: number[] = []
+    listIdsCompletes: number[] = []
+    isComplete: boolean = false;
 
     ngOnInit() {}
 
@@ -32,6 +35,14 @@ export class ListOfExercisesComponent implements OnInit {
             this.listIdsOpen.push(id)
         }else{
             this.listIdsOpen = this.listIdsOpen.filter(i => i !==id)
+        }
+    }
+
+    setIdsComplete(id:number):void{
+        if(!this.listIdsCompletes.includes(id)){
+            this.listIdsCompletes.push(id)
+        }else{
+            this.listIdsCompletes = this.listIdsCompletes.filter(i => i !==id)
         }
     }
 }

@@ -1,6 +1,6 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, forwardRef, input, OnInit, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
@@ -18,11 +18,11 @@ import { InputTextModule } from 'primeng/inputtext';
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        InputTextModule]
+        InputTextModule],
 })
 export class InputTextComponent implements OnInit {
     label = input.required<string>()
-    formControl = input<FormControl>(new FormControl())
+    formControl = input.required<FormControl<any>>()
     clickAction = output()
 
     ngOnInit() {}
