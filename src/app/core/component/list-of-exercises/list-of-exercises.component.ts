@@ -27,6 +27,7 @@ export class ListOfExercisesComponent implements OnInit {
     listIdsOpen: number[] = []
     listIdsCompletes: number[] = []
     isComplete: boolean = false;
+    deleteListAction = output<number>()
 
     ngOnInit() {}
 
@@ -44,5 +45,10 @@ export class ListOfExercisesComponent implements OnInit {
         }else{
             this.listIdsCompletes = this.listIdsCompletes.filter(i => i !==id)
         }
+    }
+
+    deleteList(id: number):void{
+        this.deleteListAction.emit(id);
+        console.log("emmiter",id)
     }
 }

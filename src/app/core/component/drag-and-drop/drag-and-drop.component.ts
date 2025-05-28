@@ -9,10 +9,12 @@ import { Store } from '@ngrx/store';
 import { Exercise, ListExercises } from '../../models/exercises.interface';
 import { exercisesActions } from '../../redux/actions/exercises.action';
 import { ExercisesStore } from '../../redux/store/exercises.store';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
     selector: 'drag-and-drop',
     templateUrl: './drag-and-drop.component.html',
+    styleUrl: './drag-and-drop.component.scss',
     styles: [
         `:host ::ng-deep {
             [pDraggable] {
@@ -29,7 +31,8 @@ import { ExercisesStore } from '../../redux/store/exercises.store';
         InputTextComponent,
         ReactiveFormsModule,
         InputTextComponent,
-        FormsModule
+        FormsModule,
+        InputTextModule
     ]
 })
 export class DragDropBasicDemo implements OnInit {

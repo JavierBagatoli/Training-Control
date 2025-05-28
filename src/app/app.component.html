@@ -5,28 +5,79 @@
     </h1>
   </section>
 
-  <div class="flex flex-row">
+  <div class="flex flex-column lg:flex-row">
+    @if(isMobile){
+      <section 
+            class="flex flex-row justify-content-between m-2">
+            <custom-button
+              label="Lista de Ejercicios"
+              (clickAction)="pageNumber = 0"/>
+            <custom-button
+              label="Dias de Entrenamiento"
+              (clickAction)="pageNumber = 1"/>
+          </section>
+    }
+    @if((isMobile && pageNumber === 0) || !isMobile){
     <section
       style='background-color: rgb(108, 108, 108);'
-      class="w-3">
+      class="w-full lg:w-3">
       <drag-and-drop/>
     </section>
-    <section 
-      style='background-color: #a4a4a4;'
-      class="w-9 flex flex-row justify-content-around">
-      @for (item of weeks; track $index; let i = $index) {
-        <div
-          (click)="selectDay(i)"
-          class="w-full text-center"
-          [class.selected-column]="item.id === idDaySelected"
-        >
-          <h1 
-            style="color: black;">{{item.name}}</h1>
-            <list-of-exercises
-              [data]="item.activity"/>
+    }
+    @if((isMobile && pageNumber === 1) || !isMobile){
+    @if(!isMobile){
+        <section 
+          class="w-full lg:w-9 flex flex-row justify-content-around table">
+        @for (item of weeks; track $index; let i = $index) {
+          <div
+            (click)="selectDay(i)"
+            class="w-full text-center"
+            [class.selected-column]="item.id === idDaySelected"
+          >
+            <h1 
+              style="color: black;">{{item.name}}</h1>
+              <list-of-exercises
+                [data]="item.activity"
+                (deleteListAction)="deleteList(i, $event)"/>
+          </div>
+        }
+        </section>
+    }@else {
+        <section 
+          style="background-color: rgb(57, 63, 63);"
+          class="w-full lg:w-9 flex flex-column justify-content-around ">
+          <section 
+            class="flex flex-row justify-content-between m-2">
+            <custom-button
+              label="<<<"
+              (clickAction)="switchOneDay(-1)"/>
+            <custom-button
+              label=">>>"
+              (clickAction)="switchOneDay(1)"/>
+          </section>
+
+        <div class="flex flex-row table">
+          @for (item of weeks; track $index; let i = $index) {
+            @if(listOfDayCellphone.includes(i)){
+              <div
+                (click)="selectDay(i)"
+                class="w-full text-center"
+                [class.selected-column]="item.id === idDaySelected"
+              >
+                <h1 
+                  style="color: black;">{{item.name}}</h1>
+                  <list-of-exercises
+                    [data]="item.activity"/>
+              </div>
+            }
+          }
         </div>
+        </section>
       }
-    </section>
+    }
+      
+
+    
   </div>
   <div class="content">
     <div class="divider" role="separator" aria-label="Divider"></div>

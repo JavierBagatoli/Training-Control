@@ -8,10 +8,12 @@
                 label="Filtra"
                 [formControl]="filter"
             />
+
+
         <ul  
             class="list-none flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
             @for (product of availableProducts; track $index; let i = $index) {
-                @if(product.name.toLowerCase().includes(filter.value.toLowerCase()) || filter.value === ''){
+                @if(product?.name.toLowerCase().includes(filter.value.toLowerCase()) || filter.value === ''){
                 <li
                     class="p-2 rounded-border shadow-sm list-horizontal"
                     style="background-color: blanchedalmond; color: black;"
@@ -23,6 +25,7 @@
                 }
             }
         </ul>
+
     </div>
     <div 
         style="background-color: rgb(88, 65, 37);"
@@ -39,16 +42,22 @@
             [style]="'background-color: rgb(79, 79, 79); color: black'"
             *ngIf="selectedProducts" >
             @for (product of selectedProducts; track $index; let i = $index) {
-                <li class="p-2 rounded-border shadow-sm">
+                <li class="p-2 pb-0 pt-1 rounded-border shadow-sm">
                     <div 
                         class="flex flex-row gap-2">
                         @if(formGroup.controls[`amountOfExercise${i}`] !== undefined){
                         <input
                             [formControl]="controlItem(i)"
                             type="number"
-                            style="width: 3rem;"
+                            pInputText
+                            style="width: 5rem; height: 43px;"
+                            max="100"
                             (blur)="setAmountOfExercise(i, $event)"/>
-                        {{product.name}}
+                            <p 
+                                style="color: lightgray; font-size: 1.1rem; margin-top: 0.7rem;"
+                                class="flex flex-row">
+                                {{product.name}}
+                            </p>
                         }
                     </div>
                 </li>
@@ -56,38 +65,36 @@
         </ul>
     </div>
     <div>
-        <section class="flex flex-row justify-content-between align-content-center m-2">
-            
+        <section class="flex flex-row justify-content-between align-content-center gap-2 m-2">
             <input-text
+                class="w-full"
                 label="Elija el nombre del set"
                 [formControl]="nameSetOfExercise"
             />
-            
             <custom-button
                 [label]="'Guardar'"
                 (clickAction)="saveGroupOfExercises()"
             />
         </section>
+        @if(setOfExercises.length > 0){
         <section>
             <ul 
-                class="list-none flex gap-2 p-0 m-0 flex-wrap"
+                class="list-none flex p-2 gap-2 m-0 flex-wrap"
                 [style]="'background-color: rgb(79, 79, 79); color: black'"
                 *ngIf="selectedProducts">
                 @for (exercise of setOfExercises; track $index; let i = $index) {
                     <li 
                         (click)="setList(exercise, i)"
-                        class="p-2 rounded-border shadow-sm">
+                        class="shadow-sm">
                         <div
-                            style="background-color: beige;"
-                            class="flex flex-row gap-2 p-2 diamante">
+                            [ngClass]="idListPackExercises === i? 'set-selected': 'set-unselected'"
+                            class="flex flex-row p-2 diamante border-round-md">
                             {{exercise.name}}
-                            <p-checkbox 
-                                [binary]="true"
-                            />
                         </div>
                     </li>
                 }
             </ul>
         </section>
+        }
     </div>
 </section>

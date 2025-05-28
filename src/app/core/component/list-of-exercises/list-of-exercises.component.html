@@ -29,6 +29,13 @@
                         {{ex.amount}} - {{ex.name}}
                     </p>
                 }
+                <section 
+                    (click)="deleteList(i)"
+                    class="flex flex-row justify-content-center label m-2">
+                    <i
+                        class="pi pi-times-circle"
+                        style="font-size: 1rem"></i>
+                </section>
             </div>
             }
         </section>
