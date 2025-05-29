@@ -31,6 +31,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
     label = input.required<string>()
     formControl = input.required<FormControl<any>>()
     clickAction = output()
+    
     value: string = '';
     onChange = (value: any) => {};
     onTouched = () => {};

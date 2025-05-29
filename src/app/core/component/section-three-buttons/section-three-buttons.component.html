@@ -1,0 +1,16 @@
+<section class="flex flex-row justify-content-between w-full">
+    <custom-button
+        [disabled]="listOfDisableds()[0]"
+        [label]="listOfLabels()[0]"
+        (clickAction)="emmitClick(0)"/>
+    @if(listOfLabels()[1] !== ''){
+    <custom-button
+        [disabled]="listOfDisableds()[1]"
+        [label]="listOfLabels()[1]"
+        (clickAction)="emmitClick(1)"/>
+    }
+    <custom-button
+        [disabled]="listOfDisableds()[2]"
+        [label]="listOfLabels()[2]"
+        (clickAction)="emmitClick(2)"/>
+</section>

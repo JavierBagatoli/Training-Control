@@ -1,22 +1,9 @@
+@import '../colors.scss';
+
 .selected-column{
     background-color: rgba(0, 255, 255, 0.374);
 }
 
-.table {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+.background-azul-6{
+    background-color: $azul-6 !important;
 }

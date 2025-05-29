@@ -1,3 +1,5 @@
+@import '../../../../colors.scss';
+
 .list-horizontal{
     display: flex;
     background-color: white;
@@ -6,12 +8,25 @@
 
 .set-selected{
     display: flex;
-    background-color: #da7a7a !important;
+    background-color: $azul-2;
     color: black;
 }
 
 .set-unselected{
     display: flex;
-    background-color: #a78787;
-    color: black;
+    background-color: $azul-5;
+    color: $gris-1;
+}
+
+.background-azul-6{
+    background-color: $azul-6 !important;
+}
+
+.background-azul-5{
+    background-color: $azul-5 !important;
+}
+
+.background-azul-4{
+    color: $gris-0;
+    background-color: $azul-4 !important;
 }

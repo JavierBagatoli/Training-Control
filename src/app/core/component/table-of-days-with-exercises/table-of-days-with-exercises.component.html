@@ -1,0 +1,21 @@
+<div class="flex flex-row table">
+    @for (item of weeks(); track $index; let i = $index) {
+    @if(listOfDayCellphone().includes(i)){
+        <div
+        (click)="emmitClick(i)"
+        class="w-full text-center border"
+        [class.selected-column]="item.id === idDaySelected()"
+        >
+        <h1 
+            style="color: black;">{{item.name}}</h1>
+            <list-of-exercises
+                [data]="item.activity"/>
+            @if(listSelected()){
+                <section class="justify-content-around flex flex-row">
+                    <h3 class="rotate">Click Aquí</h3>
+                </section>
+            }
+        </div>
+    }
+    }
+</div>

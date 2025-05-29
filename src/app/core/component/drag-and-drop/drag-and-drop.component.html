@@ -1,7 +1,7 @@
 <section class="flex flex-column m-0">
     <div
-        style="background-color: rgb(79, 79, 79);" 
-        class="p-2 border border-surface rounded-border w-60">
+        
+        class="background-azul-6 p-2 border border-surface rounded-border w-60">
             <input-text
                 class="flex flex-row w-full"
                 id="filter-input"
@@ -9,14 +9,12 @@
                 [formControl]="filter"
             />
 
-
         <ul  
             class="list-none flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
             @for (product of availableProducts; track $index; let i = $index) {
                 @if(product?.name.toLowerCase().includes(filter.value.toLowerCase()) || filter.value === ''){
                 <li
-                    class="p-2 rounded-border shadow-sm list-horizontal"
-                    style="background-color: blanchedalmond; color: black;"
+                    class="background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
                     pDraggable
                     (onDragStart)="dragStart(product)"
                     (onDragEnd)="dragEnd()">
@@ -28,18 +26,17 @@
 
     </div>
     <div 
-        style="background-color: rgb(88, 65, 37);"
-        class="border-surface rounded-border" 
+        class="background-azul-5 border-surface rounded-border" 
         pDroppable (onDrop)="drop()">
         <p 
         class="text-center border-surface">
-            Drop Zone
+           >> Deja los ejercicios aquí <<
         </p>
     </div>
     <div>
         <ul 
-            class="list-none flex flex-column gap-2 p-0 m-0 flex-wrap"
-            [style]="'background-color: rgb(79, 79, 79); color: black'"
+            class="background-azul-6 list-none flex flex-column gap-2 p-0 m-0 flex-wrap"
+            [style]="'color: black'"
             *ngIf="selectedProducts" >
             @for (product of selectedProducts; track $index; let i = $index) {
                 <li class="p-2 pb-0 pt-1 rounded-border shadow-sm">
@@ -79,8 +76,8 @@
         @if(setOfExercises.length > 0){
         <section>
             <ul 
-                class="list-none flex p-2 gap-2 m-0 flex-wrap"
-                [style]="'background-color: rgb(79, 79, 79); color: black'"
+                class="background-azul-6 list-none flex p-2 gap-2 m-0 flex-wrap"
+                [style]="'color: black'"
                 *ngIf="selectedProducts">
                 @for (exercise of setOfExercises; track $index; let i = $index) {
                     <li 

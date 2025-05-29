@@ -22,6 +22,7 @@ import { ButtonModule } from 'primeng/button';
         ButtonModule]
 })
 export class CustomButtonComponent implements OnInit {
+    disabled = input<boolean>()
     label = input.required<string>()
     clickAction = output()
 

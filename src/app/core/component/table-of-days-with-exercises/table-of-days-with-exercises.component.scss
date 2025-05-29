@@ -1,0 +1,77 @@
+@import '../../../../colors.scss';
+
+.height{
+    height: 2rem;
+}
+
+.background-red {
+	background: linear-gradient(-45deg, #575453, #613445) !important;
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+.background-green {
+	background: linear-gradient(-45deg, #545753, #34613f) !important;
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.label:hover{
+	color: #bec7bb90;
+}
+
+.table {
+	background: linear-gradient(-45deg, $azul-1, $azul-2,$azul-3, $azul-4);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.rotate{
+	opacity: 0.5;
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+	margin-top: 10rem;
+	animation: desbanecer 10s ease 0s infinite normal forwards;
+}
+
+@keyframes desbanecer {
+	0%,
+	50%,
+	100% {
+		opacity: 0.5;
+	}
+
+	25%,
+	75% {
+		opacity: 0;
+	}
+}
+
+.border{
+	border-right: #87899441 solid;
+}
