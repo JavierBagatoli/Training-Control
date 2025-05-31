@@ -17,6 +17,7 @@
                     class="background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
                     pDraggable
                     (onDragStart)="dragStart(product)"
+                    (touchstart)="dragStart(product)"
                     (onDragEnd)="dragEnd()">
                     {{product.name}}
                 </li>
@@ -27,10 +28,11 @@
     </div>
     <div 
         class="background-azul-5 border-surface rounded-border" 
-        pDroppable (onDrop)="drop()">
+        pDroppable (onDrop)="drop()"
+        (touchend)="drop()">
         <p 
         class="text-center border-surface">
-           >> Deja los ejercicios aquí <<
+           >> Deja los ejercicios aquí (Mobile 1)<<
         </p>
     </div>
     <div>
