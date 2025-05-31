@@ -59,6 +59,9 @@ export class DragDropBasicDemo implements OnInit {
 
     ngOnInit() {
         this.selectedProducts = [];
+        if(localStorage.getItem('setOfExercises')){
+            this.setOfExercises = JSON.parse(localStorage.getItem('setOfExercises') as any)
+        }
         this.availableProducts = [
             {id:'1', name: 'Press Banca'},
             {id:'2', name: 'Press Inclinado con Mancuernas'},
@@ -109,14 +112,23 @@ export class DragDropBasicDemo implements OnInit {
 
     drop() {
         if (this.draggedProduct) {
-            let draggedProductIndex = this.findIndex(this.draggedProduct);
-            this.selectedProducts = [...(this.selectedProducts as any[]), this.draggedProduct];
-            this.availableProducts = this.availableProducts?.filter((val, i) => i != draggedProductIndex);
-            this.draggedProduct = null;
-            
-            this.formGroup.addControl(
-                `amountOfExercise${this.selectedProducts.length-1}`,
-                new FormControl(0,[Validators.required, Validators.min(0)]));
+            let existIdOnResult = false;
+
+            this.selectedProducts.forEach(
+                (product) => {
+                    if(product.id === this.draggedProduct.id){
+                        existIdOnResult = true;
+                    }
+                }
+            )
+
+            if(!existIdOnResult){
+                this.selectedProducts = [...(this.selectedProducts as any[]), this.draggedProduct];
+                this.draggedProduct = null;
+                this.formGroup.addControl(
+                    `amountOfExercise${this.selectedProducts.length-1}`,
+                    new FormControl(0,[Validators.required, Validators.min(0)]));
+            }
         }
     }
 
@@ -156,6 +168,7 @@ export class DragDropBasicDemo implements OnInit {
         const previewValue : string = this.formGroup.controls['filter'].value
         this.formGroup.reset();
         this.formGroup.controls['filter'].setValue(previewValue)
+        localStorage.setItem('setOfExercises', JSON.stringify(this.setOfExercises))
     }
 
     setAmountOfExercise(id: number, $event: any):void{
@@ -163,7 +176,6 @@ export class DragDropBasicDemo implements OnInit {
     }
 
     setList(list : any, id : number):void{
-        console.log("Limpiar",this.idListPackExercises, id)
         if(this.idListPackExercises !== id){
             this.store.dispatch(
                 exercisesActions.setListOfExercises({list: list})
@@ -172,10 +184,19 @@ export class DragDropBasicDemo implements OnInit {
             return
         }
 
-        console.log("Limpiar",this.idListPackExercises, id)
         this.store.dispatch(
             exercisesActions.setListOfExercises({list: null})
         )
         this.idListPackExercises = -1;
+    }
+
+    deleteSet(){
+        this.setOfExercises.splice(this.idListPackExercises, 1);
+
+        this.store.dispatch(
+            exercisesActions.setListOfExercises({list: null})
+        )
+        this.idListPackExercises = -1;
+        localStorage.setItem('setOfExercises', JSON.stringify(this.setOfExercises))
     }
 }

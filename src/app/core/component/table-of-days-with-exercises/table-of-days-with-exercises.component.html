@@ -9,7 +9,8 @@
         <h1 
             style="color: black;">{{item.name}}</h1>
             <list-of-exercises
-                [data]="item.activity"/>
+                [data]="item.activity"
+                (deleteListAction)="deleteList(i, $event)"/>
             @if(listSelected()){
                 <section class="justify-content-around flex flex-row">
                     <h3 class="rotate">Click Aquí</h3>

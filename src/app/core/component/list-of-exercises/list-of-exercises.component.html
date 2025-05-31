@@ -30,11 +30,14 @@
                     </p>
                 }
                 <section 
-                    (click)="deleteList(i)"
-                    class="flex flex-row justify-content-center label m-2">
-                    <i
-                        class="pi pi-times-circle"
-                        style="font-size: 1rem"></i>
+                    class="flex flex-row  m-2 gap-2 justify-content-between">
+                    <p-slider 
+                        class="slider flex flex-row p-2"
+                        [(ngModel)]="progressToDelete[i]"
+                        [step]="5"
+                        styleClass="w-6rem"
+                        (onSlideEnd)="deleteList(i)"/>
+                    <i class="pi pi-trash label"></i>
                 </section>
             </div>
             }

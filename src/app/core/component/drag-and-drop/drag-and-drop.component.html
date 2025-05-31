@@ -5,7 +5,7 @@
             <input-text
                 class="flex flex-row w-full"
                 id="filter-input"
-                label="Filtra"
+                label="Filtrar ejercicios"
                 [formControl]="filter"
             />
 
@@ -79,7 +79,6 @@
         <section>
             <ul 
                 class="background-azul-6 list-none flex p-2 gap-2 m-0 flex-wrap"
-                [style]="'color: black'"
                 *ngIf="selectedProducts">
                 @for (exercise of setOfExercises; track $index; let i = $index) {
                     <li 
@@ -94,6 +93,15 @@
                 }
             </ul>
         </section>
+        
+        @if(idListPackExercises !== -1){
+            <section #sectionDeleteSet class="flex flex-row justify-content-center m-3">
+                <custom-button
+                    label="Borrar set de entrenamiento"
+                    (clickAction)="deleteSet()"
+                />
+            </section>
         }
+    }
     </div>
 </section>

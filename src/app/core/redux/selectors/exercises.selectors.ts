@@ -7,3 +7,7 @@ export const selectExersisesState = createFeatureSelector<ExercisesStore>('exerc
 export const selectListSelected = createSelector(
     selectExersisesState, (state): ListExercises | null => state.listOfExcersices 
 )
+
+export const selectListSelectedToDelete = createSelector(
+    selectExersisesState, (state): {day: number, poss: number} => state.listOfExcersicesToDelete
+)

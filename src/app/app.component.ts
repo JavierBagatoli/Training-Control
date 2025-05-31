@@ -4,13 +4,14 @@ import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DragDropBasicDemo } from "./core/component/drag-and-drop/drag-and-drop.component";
 import { Store } from '@ngrx/store';
-import { selectListSelected } from './core/redux/selectors/exercises.selectors';
+import { selectListSelected, selectListSelectedToDelete } from './core/redux/selectors/exercises.selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ExercisesStore } from './core/redux/store/exercises.store';
 import { ListExercises } from './core/models/exercises.interface';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { SectionThreeButtonsComponent } from "./core/component/section-three-buttons/section-three-buttons.component";
 import { TableOfDaysWithExercisesComponent } from "./core/component/table-of-days-with-exercises/table-of-days-with-exercises.component";
+import { exercisesActions } from './core/redux/actions/exercises.action';
 
 @Component({
   selector: 'app-root',
@@ -62,8 +63,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      const persistencia : string | null | undefined = localStorage.getItem('calendario') ;   
-      console.log(persistencia)
+      const persistencia : string | null | undefined = localStorage.getItem('calendario');   
+
       if(persistencia){
         this.weeks = JSON.parse(persistencia);
       } 
@@ -92,12 +93,6 @@ export class AppComponent implements OnInit {
         this.listOfDayCellphone = this.listOfDayCellphone.filter(a => a !== this.listOfDayCellphone[this.listOfDayCellphone.length-1])
       }
     }
-  }
-
-  deleteList(id: number, $event: any):void{
-    this.weeks[id].activity = this.weeks[id].activity.filter((_activity, index) => index !== $event)
-
-    localStorage.setItem('calendario', JSON.stringify(this.weeks))
   }
 
   setPage(pageNro: 0 | 1 | 2){

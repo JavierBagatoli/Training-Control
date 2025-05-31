@@ -1,8 +1,9 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
 import { ListExercises } from '../../models/exercises.interface';
+import { SliderModule } from 'primeng/slider';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'list-of-exercises',
@@ -19,6 +20,8 @@ import { ListExercises } from '../../models/exercises.interface';
     imports: [
         DividerModule,
         CommonModule,
+        SliderModule,
+        FormsModule
     ]
 })
 export class ListOfExercisesComponent implements OnInit {
@@ -28,6 +31,8 @@ export class ListOfExercisesComponent implements OnInit {
     listIdsCompletes: number[] = []
     isComplete: boolean = false;
     deleteListAction = output<number>()
+
+    progressToDelete: number[] = []
 
     ngOnInit() {}
 
@@ -48,7 +53,10 @@ export class ListOfExercisesComponent implements OnInit {
     }
 
     deleteList(id: number):void{
-        this.deleteListAction.emit(id);
-        console.log("emmiter",id)
+        if(this.progressToDelete[id] === 100){
+            this.listIdsOpen = this.listIdsOpen.filter((idPoss) => idPoss !==id);
+            this.deleteListAction.emit(id);
+            this.progressToDelete[id]=0;
+        }
     }
 }
