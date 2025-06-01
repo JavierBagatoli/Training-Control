@@ -10,11 +10,11 @@
             />
 
         <ul  
-            class="list-none flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
+            class="list-heigth flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
             @for (product of availableProducts; track $index; let i = $index) {
                 @if(product?.name.toLowerCase().includes(filter.value.toLowerCase()) || filter.value === ''){
                 <li
-                    class="background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
+                    class="label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
                     pDraggable
                     (onDragStart)="dragStart(product)"
                     (touchstart)="dragStart(product)"
@@ -71,6 +71,7 @@
                 [formControl]="nameSetOfExercise"
             />
             <custom-button
+                [disabled]="!nameSetOfExercise.value || selectedProducts.length === 0"
                 [label]="'Guardar'"
                 (clickAction)="saveGroupOfExercises()"
             />

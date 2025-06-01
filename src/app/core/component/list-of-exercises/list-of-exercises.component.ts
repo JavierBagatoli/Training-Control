@@ -36,7 +36,9 @@ export class ListOfExercisesComponent implements OnInit {
 
     ngOnInit() {}
 
-    setIdsOpen(id:number):void{
+    setIdsOpen(id:number, $event : any):void{
+        $event.preventDefault()
+
         if(!this.listIdsOpen.includes(id)){
             this.listIdsOpen.push(id)
         }else{

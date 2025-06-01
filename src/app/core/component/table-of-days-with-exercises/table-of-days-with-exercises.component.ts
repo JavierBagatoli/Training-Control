@@ -37,9 +37,24 @@ export class TableOfDaysWithExercisesComponent{
 
     selectDay = output<number>();
     actionToDelete = output<{day: number, numberPoss: number}>();
+
+    isValidClick : boolean = true;
     
-    emmitClick(button: number){
-        this.selectDay.emit(button);
+    emmitClick(button: number, $event: any){
+        setTimeout(() => {
+            if(this.isValidClick){
+                this.selectDay.emit(button);
+            }
+        },1)
+        
+    }
+    
+    cancelEmmitClick(){
+        this.isValidClick = false;
+        console.log("click")
+        setTimeout(() => {
+            this.isValidClick = true;
+        },3)
     }
 
     deleteList(day: number, $event: any){

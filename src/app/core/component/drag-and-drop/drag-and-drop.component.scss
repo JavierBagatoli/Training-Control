@@ -30,3 +30,13 @@
     color: $gris-0;
     background-color: $azul-4 !important;
 }
+
+.list-heigth{
+    height: 40vh;
+    overflow-y: scroll;
+}
+
+.label-exercises{
+    width: minmax(150px, 25%) !important;
+    text-overflow: ellipsis;
+}
