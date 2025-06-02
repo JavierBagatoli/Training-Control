@@ -5,3 +5,12 @@
 *{
     font-family: "Ancizar Sans", sans-serif;
 }
+
+.animation-size-up{
+	transition: transform 0.3s ease;
+}
+
+.animation-size-up:hover{
+	cursor: pointer;
+	transform: scale(1.1, 1.1) translateY(-3px);
+}

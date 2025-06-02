@@ -7,7 +7,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { selectListSelected } from '../../redux/selectors/exercises.selectors';
 import { Store } from '@ngrx/store';
 import { ExercisesStore } from '../../redux/store/exercises.store';
-import { exercisesActions } from '../../redux/actions/exercises.action';
 
 @Component({
     selector: 'table-of-days-with-exercises',

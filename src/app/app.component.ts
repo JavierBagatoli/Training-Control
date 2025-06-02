@@ -11,7 +11,6 @@ import { ListExercises } from './core/models/exercises.interface';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { SectionThreeButtonsComponent } from "./core/component/section-three-buttons/section-three-buttons.component";
 import { TableOfDaysWithExercisesComponent } from "./core/component/table-of-days-with-exercises/table-of-days-with-exercises.component";
-import { exercisesActions } from './core/redux/actions/exercises.action';
 
 @Component({
   selector: 'app-root',

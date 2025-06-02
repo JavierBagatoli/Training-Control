@@ -10,6 +10,7 @@ import { Exercise, ListExercises } from '../../models/exercises.interface';
 import { exercisesActions } from '../../redux/actions/exercises.action';
 import { ExercisesStore } from '../../redux/store/exercises.store';
 import { InputTextModule } from 'primeng/inputtext';
+import { listOfExercises } from '../../../store/list-of-exercises';
 
 @Component({
     selector: 'drag-and-drop',
@@ -42,7 +43,7 @@ export class DragDropBasicDemo implements OnInit {
         }>
     )
 
-    availableProducts: any[] | undefined;
+    availableProducts: Omit<Exercise, 'amount'>[] = [];
     selectedProducts: Exercise[] = [];
     draggedProduct: any | undefined | null;
     setOfExercises: ListExercises[] = []
@@ -62,48 +63,7 @@ export class DragDropBasicDemo implements OnInit {
         if(localStorage.getItem('setOfExercises')){
             this.setOfExercises = JSON.parse(localStorage.getItem('setOfExercises') as any)
         }
-        this.availableProducts = [
-            {id:'1', name: 'Press Banca'},
-            {id:'2', name: 'Press Inclinado con Mancuernas'},
-            {id:'3', name: 'Press Declinado'},
-            {id:'4', name: 'Aperturas con Mancuernas'},
-            {id:'5', name: 'Pullover con Mancuerna'},
-            {id:'6', name: 'Press Militar con Barra'},
-            {id:'7', name: 'Press Arnold'},
-            {id:'8', name: 'Elevaciones Laterales'},
-            {id:'9', name: 'Elevaciones Frontales'},
-            {id:'10', name: 'Pájaros (Deltoide Posterior)'},
-            {id:'11', name: 'Remo con Barra'},
-            {id:'12', name: 'Remo en Máquina'},
-            {id:'13', name: 'Jalón al Pecho'},
-            {id:'14', name: 'Jalón Dorsal Trasnuca'},
-            {id:'15', name: 'Dominadas'},
-            {id:'16', name: 'Peso Muerto'},
-            {id:'17', name: 'Curl Bíceps con Barra'},
-            {id:'18', name: 'Curl Bíceps Alterno'},
-            {id:'19', name: 'Curl Concentrado'},
-            {id:'20', name: 'Curl en Banco Scott'},
-            {id:'21', name: 'Extensión de Tríceps en Polea'},
-            {id:'22', name: 'Press Francés con Barra'},
-            {id:'23', name: 'Fondos en Paralelas'},
-            {id:'24', name: 'Patada de Tríceps'},
-            {id:'25', name: 'Sentadillas con Barra'},
-            {id:'26', name: 'Prensa de Piernas'},
-            {id:'27', name: 'Zancadas con Mancuernas'},
-            {id:'28', name: 'Extensiones de Piernas'},
-            {id:'29', name: 'Curl Femoral'},
-            {id:'30', name: 'Elevación de Talones de Pie'},
-            {id:'31', name: 'Elevación de Talones Sentado'},
-            {id:'32', name: 'Crunch Abdominal'},
-            {id:'33', name: 'Elevaciones de Piernas'},
-            {id:'34', name: 'Plancha'},
-            {id:'35', name: 'Ab Wheel'},
-            {id:'36', name: 'Mountain Climbers'},
-            {id:'37', name: 'Burpees'},
-            {id:'38', name: 'Jumping Jacks'},
-            {id:'39', name: 'Peso Muerto Rumano'},
-            {id:'40', name: 'Face Pull'},
-        ]
+        this.availableProducts = listOfExercises
     }
 
     dragStart(product: any) {
@@ -198,5 +158,10 @@ export class DragDropBasicDemo implements OnInit {
         )
         this.idListPackExercises = -1;
         localStorage.setItem('setOfExercises', JSON.stringify(this.setOfExercises))
+    }
+
+    editSet(){
+        console.log(">> set:",this.setOfExercises[this.idListPackExercises].listOfExercises)
+        this.selectedProducts = this.setOfExercises[this.idListPackExercises].listOfExercises
     }
 }

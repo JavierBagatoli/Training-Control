@@ -7,4 +7,5 @@ export interface Exercise{
     amount: number,
     id: number,
     name: string,
+    zona: string,
 }

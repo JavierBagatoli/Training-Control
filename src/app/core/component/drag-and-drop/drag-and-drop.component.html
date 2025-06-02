@@ -1,7 +1,7 @@
 <section class="flex flex-column m-0">
     <div
         
-        class="background-azul-6 p-2 border border-surface rounded-border w-60">
+        class="list-heigth background-azul-6 p-2 border border-surface rounded-border w-60">
             <input-text
                 class="flex flex-row w-full"
                 id="filter-input"
@@ -10,11 +10,13 @@
             />
 
         <ul  
-            class="list-heigth flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
+            class="flex flex-col flex-wrap gap-2 p-0 m-0 mt-2">
             @for (product of availableProducts; track $index; let i = $index) {
-                @if(product?.name.toLowerCase().includes(filter.value.toLowerCase()) || filter.value === ''){
+                @if(product.name.toLowerCase().includes(filter.value.toLowerCase())
+                    || filter.value === ''
+                    || product.zona.toLowerCase().includes(filter.value.toLowerCase())){
                 <li
-                    class="label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
+                    class="animation-size-up label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
                     pDraggable
                     (onDragStart)="dragStart(product)"
                     (touchstart)="dragStart(product)"
@@ -87,7 +89,7 @@
                         class="shadow-sm">
                         <div
                             [ngClass]="idListPackExercises === i? 'set-selected': 'set-unselected'"
-                            class="flex flex-row p-2 diamante border-round-md">
+                            class="animation-size-up flex flex-row p-2 diamante border-round-md">
                             {{exercise.name}}
                         </div>
                     </li>
@@ -96,10 +98,14 @@
         </section>
         
         @if(idListPackExercises !== -1){
-            <section #sectionDeleteSet class="flex flex-row justify-content-center m-3">
+            <section #sectionDeleteSet class="flex flex-row justify-content-center gap-2 m-3">
                 <custom-button
-                    label="Borrar set de entrenamiento"
+                    label="Borrar set"
                     (clickAction)="deleteSet()"
+                />
+                <custom-button
+                    label="Editar set"
+                    (clickAction)="editSet()"
                 />
             </section>
         }

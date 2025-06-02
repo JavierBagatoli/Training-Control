@@ -77,3 +77,8 @@ div i:hover{
 	cursor: pointer;
 	transform: scale(1.2, 1.2) translateY(-3px);
 }
+
+.text-label{
+	width: 3rem;
+	text-overflow: ellipsis;
+}

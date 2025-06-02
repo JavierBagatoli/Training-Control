@@ -1,13 +1,13 @@
 @for (exer of data(); track $index; let i = $index) {
     <div 
         [ngClass]="listIdsCompletes.includes(i)? 'background-green' : 'background-red'"
-        class="m-3 border-round-md ">
+        class="animation-size-up m-3 border-round-md ">
         <section class="background flex flex-column">
             <div class="flex flex-row justify-content-between mx-3">
                 <span
-                    class="mt-3 w-full flex flex-row justify-content-between"
+                    class="text-label mt-3 gap-2 w-full flex flex-row justify-content-between"
                     (click)="setIdsOpen(i, $event)">
-                    {{exer.name}}
+                        {{exer.name}}
                     <div
                         (click)="setIdsComplete(i)">
                         @if(listIdsCompletes.includes(i)){
