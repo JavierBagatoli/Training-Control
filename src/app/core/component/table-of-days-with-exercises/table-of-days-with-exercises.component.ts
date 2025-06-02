@@ -50,7 +50,6 @@ export class TableOfDaysWithExercisesComponent{
     
     cancelEmmitClick(){
         this.isValidClick = false;
-        console.log("click")
         setTimeout(() => {
             this.isValidClick = true;
         },3)

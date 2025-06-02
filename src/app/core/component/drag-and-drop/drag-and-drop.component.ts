@@ -50,6 +50,8 @@ export class DragDropBasicDemo implements OnInit {
     formGroup: FormGroup;
 
     idListPackExercises: number = -1
+
+    idForEditSetofExercises : number = -1;
     
     constructor(private _fb: FormBuilder){
         this.formGroup = this._fb.group({
@@ -120,10 +122,20 @@ export class DragDropBasicDemo implements OnInit {
     }
 
     saveGroupOfExercises():void{
-        this.setOfExercises.push( {
-            name: this.nameSetOfExercise!.value!,
-            listOfExercises: this.selectedProducts
-        });
+        if(this.idForEditSetofExercises === -1){
+            this.setOfExercises.push( {
+                name: this.nameSetOfExercise.value,
+                listOfExercises: this.selectedProducts
+            });
+        }else{
+            this.setOfExercises[this.idForEditSetofExercises] = {
+                name: this.nameSetOfExercise.value,
+                listOfExercises: this.selectedProducts
+            };
+
+            this.idForEditSetofExercises = -1
+        }
+
         this.selectedProducts = [];
         const previewValue : string = this.formGroup.controls['filter'].value
         this.formGroup.reset();
@@ -131,8 +143,12 @@ export class DragDropBasicDemo implements OnInit {
         localStorage.setItem('setOfExercises', JSON.stringify(this.setOfExercises))
     }
 
-    setAmountOfExercise(id: number, $event: any):void{
-        this.selectedProducts[id].amount = this.formGroup.controls[`amountOfExercise${id}`].value
+    setAmountOfExercise(id: number):void{
+        this.selectedProducts = JSON.parse(JSON.stringify(this.selectedProducts))
+        this.selectedProducts[id] = {
+            ...this.selectedProducts[id],
+            amount: this.formGroup.controls[`amountOfExercise${id}`].value
+        }
     }
 
     setList(list : any, id : number):void{
@@ -161,7 +177,21 @@ export class DragDropBasicDemo implements OnInit {
     }
 
     editSet(){
-        console.log(">> set:",this.setOfExercises[this.idListPackExercises].listOfExercises)
-        this.selectedProducts = this.setOfExercises[this.idListPackExercises].listOfExercises
+        this.setOfExercises[this.idListPackExercises].listOfExercises.forEach((exer,index) => {
+            this.formGroup.setControl(
+                `amountOfExercise${index}`,
+                new FormControl(exer.amount,[Validators.required, Validators.min(0)]));
+        })
+
+        this.selectedProducts = this.setOfExercises[this.idListPackExercises].listOfExercises;
+
+        this.idForEditSetofExercises = this.idListPackExercises;
+        this.nameSetOfExercise.setValue(this.setOfExercises[this.idListPackExercises].name);
+    }
+
+    cancelEditSet(){
+        this.selectedProducts = [];
+        this.idForEditSetofExercises = -1;
+        this.nameSetOfExercise.setValue(null);
     }
 }

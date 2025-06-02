@@ -53,7 +53,7 @@
                             pInputText
                             style="width: 5rem; height: 43px;"
                             max="100"
-                            (blur)="setAmountOfExercise(i, $event)"/>
+                            (blur)="setAmountOfExercise(i)"/>
                             <p 
                                 style="color: lightgray; font-size: 1.1rem; margin-top: 0.7rem;"
                                 class="flex flex-row">
@@ -107,6 +107,12 @@
                     label="Editar set"
                     (clickAction)="editSet()"
                 />
+                @if(idForEditSetofExercises !== -1){
+                    <custom-button
+                        label="Cancelar"
+                        (clickAction)="cancelEditSet()"
+                    />
+                }
             </section>
         }
     }

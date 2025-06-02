@@ -24,7 +24,6 @@ export const exercisesReducer = createReducer(
     }
   }),
   on(exercisesActions.deleteListOfExercisesOfDay, (state, {day,poss}):ExercisesStore => {
-    console.log('hola')
     return {
         ...state,
         listOfExcersicesToDelete: {
