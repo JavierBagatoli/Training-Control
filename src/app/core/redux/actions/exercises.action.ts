@@ -7,6 +7,9 @@ export const exercisesActions = createActionGroup({
         'Restart':emptyProps(),
 
         'Set List of Exercises': props<{list: ListExercises | null}>(),
-        'Delete List of Exercises of Day': props<{day: number, poss:number}>()
+        'Delete List of Exercises of Day': props<{day: number, poss:number}>(),
+
+        'Open Dialog New Exercise': emptyProps(),
+        'Close Dialog New Exercise': emptyProps(),
     }
 })

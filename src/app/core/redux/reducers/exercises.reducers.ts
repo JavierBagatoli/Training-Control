@@ -7,7 +7,8 @@ export const initialState: ExercisesStore = {
     listOfExcersicesToDelete: {
         day: -1,
         poss: -1,
-    }
+    },
+    isOpenNewExercise: false,
 };
 
 export const exercisesReducer = createReducer(
@@ -31,5 +32,18 @@ export const exercisesReducer = createReducer(
           poss: poss,
         }
     }
-  })
+  }),
+  on(exercisesActions.openDialogNewExercise, (state):ExercisesStore => {
+    return {
+        ...state,
+        isOpenNewExercise: true
+    }
+  }),
+
+  on(exercisesActions.closeDialogNewExercise, (state):ExercisesStore => {
+    return {
+        ...state,
+        isOpenNewExercise: false
+    }
+  }),
 )

@@ -65,7 +65,16 @@ export class DragDropBasicDemo implements OnInit {
         if(localStorage.getItem('setOfExercises')){
             this.setOfExercises = JSON.parse(localStorage.getItem('setOfExercises') as any)
         }
-        this.availableProducts = listOfExercises
+
+        try{
+            let odlListOfExercises = localStorage.getItem('ListOfExercises');
+            if(odlListOfExercises){
+                console.log(typeof JSON.parse(odlListOfExercises))
+                this.availableProducts = JSON.parse(odlListOfExercises)
+            }
+        }catch(e){
+            this.availableProducts = listOfExercises
+        }
     }
 
     dragStart(product: any) {
@@ -193,5 +202,23 @@ export class DragDropBasicDemo implements OnInit {
         this.selectedProducts = [];
         this.idForEditSetofExercises = -1;
         this.nameSetOfExercise.setValue(null);
+    }
+
+    addNewExercise(){
+        this.store.dispatch(exercisesActions.openDialogNewExercise())
+    }
+
+    deleteExercise(id: number){
+        let odlList = localStorage.getItem('ListOfExercises')
+
+        if(odlList){
+            try{    
+                let odlListOfExercises = JSON.parse(odlList) as Exercise[]
+                let newList = odlListOfExercises.filter(exer => exer.id !== id)
+                localStorage.setItem('ListOfExercises', JSON.stringify(newList))
+            }catch(_e){
+
+            }
+        }
     }
 }

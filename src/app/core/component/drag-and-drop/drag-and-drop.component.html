@@ -16,16 +16,31 @@
                     || filter.value === ''
                     || product.zona.toLowerCase().includes(filter.value.toLowerCase())){
                 <li
-                    class="animation-size-up label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
+                    class="animation-size-up label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md gap-2"
                     pDraggable
                     (onDragStart)="dragStart(product)"
                     (touchstart)="dragStart(product)"
                     (onDragEnd)="dragEnd()">
                     {{product.name}}
+                    @if(product.id > 10000){
+                        <i (click)="deleteExercise(product.id)" class="pi pi-trash"></i>
+                    }
                 </li>
                 }
             }
-        </ul>
+            <li
+                (click)="addNewExercise()"
+                class="tag-special animation-size-up label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md">
+               > Agregar Ejercicio <
+            </li>
+            <li
+                (click)="addNewExercise()"
+                class="tag-special animation-size-up label-exercises background-azul-4 p-2 rounded-border shadow-sm list-horizontal border-round-md"
+                style="background-color: red !important;"
+                >
+               > Eliminar Ejercicios <
+            </li>
+    </ul>
 
     </div>
     <div 

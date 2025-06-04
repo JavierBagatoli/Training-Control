@@ -4,13 +4,15 @@ import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DragDropBasicDemo } from "./core/component/drag-and-drop/drag-and-drop.component";
 import { Store } from '@ngrx/store';
-import { selectListSelected, selectListSelectedToDelete } from './core/redux/selectors/exercises.selectors';
+import { selectIsOpenDialogNewExercise, selectListSelected, selectListSelectedToDelete } from './core/redux/selectors/exercises.selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ExercisesStore } from './core/redux/store/exercises.store';
-import { ListExercises } from './core/models/exercises.interface';
+import { Exercise, ListExercises } from './core/models/exercises.interface';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { SectionThreeButtonsComponent } from "./core/component/section-three-buttons/section-three-buttons.component";
 import { TableOfDaysWithExercisesComponent } from "./core/component/table-of-days-with-exercises/table-of-days-with-exercises.component";
+import { FormNewExerciseComponent } from "./core/component/form-new-exercise/form-new-exercise.component";
+import { listOfExercises } from './store/list-of-exercises';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,8 @@ import { TableOfDaysWithExercisesComponent } from "./core/component/table-of-day
     ButtonModule,
     DragDropBasicDemo,
     SectionThreeButtonsComponent,
-    TableOfDaysWithExercisesComponent
+    TableOfDaysWithExercisesComponent,
+    FormNewExerciseComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -48,6 +51,7 @@ export class AppComponent implements OnInit {
   isMobile: boolean = false;
   pageNumber: 0 | 1 = 0;
   listOfDayCellphone: number[] = [0,1]
+  reloadList: boolean = false;
 
   constructor(@Inject(DOCUMENT) document: Document, private breakpointObserver: BreakpointObserver,) {
     this.breakpointObserver.observe([
@@ -99,6 +103,26 @@ export class AppComponent implements OnInit {
       this.pageNumber = 0
     }else{
       this.pageNumber = 1
+    }
+  }
+
+  addNewExercise($event: any){
+    let odlListOfExercises = localStorage.getItem('ListOfExercises');
+
+    if(!odlListOfExercises){
+      odlListOfExercises = JSON.stringify(listOfExercises)
+      localStorage.setItem('ListOfExercises', odlListOfExercises)
+    }
+
+    if(odlListOfExercises){
+      let newList = JSON.parse(odlListOfExercises)
+      console.log(newList, "aaa")
+      newList.push($event)
+      localStorage.setItem('ListOfExercises', JSON.stringify(newList))
+      this.reloadList = true;
+      setTimeout(() => {
+        this.reloadList = false;
+      },1)
     }
   }
 }

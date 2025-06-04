@@ -15,8 +15,9 @@
                 [data]="item.activity"
                 (deleteListAction)="deleteList(i, $event)"/>
             @if(listSelected() && item.activity.length < 3){
-                <section class="justify-content-around flex flex-row">
-                    <h3 class="rotate">Click Aquí</h3>
+                <section class="justify-content-around flex flex-column gap-2 m-6">
+                    <span>Click</span>
+                    <span>Aquí</span>
                 </section>
             }
         </div>

@@ -1,0 +1,23 @@
+<p-drawer 
+    position="right"
+    (onHide)="closePage()"
+    header="Crear nuevo ejercicio"
+    [modal]="true"
+    [visible]="isVisible() || false"
+    [style]="{ width: '25rem' }">
+    <div class="flex flex-column gap-2">
+        <input-text
+            label="Nombre de Ejercicio"
+            [formControl]="nameExercise"
+        />
+        
+        <input-text
+            label="Zona del Ejercicio"
+            [formControl]="zoneExercise"
+        />
+
+        <custom-button
+            label="Agregar Ejercicio"
+            (clickAction)="addNewExercise()"/>
+    </div>
+</p-drawer>

@@ -17,7 +17,9 @@
     @if((isMobile && pageNumber === 0) || !isMobile){
     <section
       class="w-full lg:w-3 background-azul-6">
-      <drag-and-drop/>
+      @if(!reloadList){
+        <drag-and-drop/>
+      }
     </section>
     }
 
@@ -55,6 +57,9 @@
   <div class="content">
     <div class="divider" role="separator" aria-label="Divider"></div>
   </div>
+  <form-new-exercise
+    (actionAddNewExercise)="addNewExercise($event)"
+  />
 </main>
 
 <router-outlet />

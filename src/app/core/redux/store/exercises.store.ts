@@ -5,5 +5,6 @@ export interface ExercisesStore{
     listOfExcersicesToDelete: {
         day: number,
         poss: number,
-    }
+    },
+    isOpenNewExercise: boolean,
 }
