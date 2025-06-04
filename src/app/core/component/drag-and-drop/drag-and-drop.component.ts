@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { DragDropModule } from 'primeng/dragdrop';
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -11,6 +11,9 @@ import { exercisesActions } from '../../redux/actions/exercises.action';
 import { ExercisesStore } from '../../redux/store/exercises.store';
 import { InputTextModule } from 'primeng/inputtext';
 import { listOfExercises } from '../../../store/list-of-exercises';
+import { SectionThreeButtonsComponent } from "../drop-zone/drop-zone.component";
+import { toSignal } from '@angular/core/rxjs-interop';
+import { selectListOfExercises } from '../../redux/selectors/exercises.selectors';
 
 @Component({
     selector: 'drag-and-drop',
@@ -25,16 +28,17 @@ import { listOfExercises } from '../../../store/list-of-exercises';
     ],
     standalone: true,
     imports: [
-        DragDropModule,
-        CommonModule,
-        CheckboxModule,
-        CustomButtonComponent,
-        InputTextComponent,
-        ReactiveFormsModule,
-        InputTextComponent,
-        FormsModule,
-        InputTextModule
-    ]
+    DragDropModule,
+    CommonModule,
+    CheckboxModule,
+    CustomButtonComponent,
+    InputTextComponent,
+    ReactiveFormsModule,
+    InputTextComponent,
+    FormsModule,
+    InputTextModule,
+    SectionThreeButtonsComponent
+]
 })
 export class DragDropBasicDemo implements OnInit {
     private readonly store = inject(
@@ -43,7 +47,9 @@ export class DragDropBasicDemo implements OnInit {
         }>
     )
 
-    availableProducts: Omit<Exercise, 'amount'>[] = [];
+    availableProducts = toSignal(this.store.select(selectListOfExercises))
+
+
     selectedProducts: Exercise[] = [];
     draggedProduct: any | undefined | null;
     setOfExercises: ListExercises[] = []
@@ -53,6 +59,13 @@ export class DragDropBasicDemo implements OnInit {
 
     idForEditSetofExercises : number = -1;
     
+    readonly showDeleteButonOnList = computed(() => {
+       return this.availableProducts()?.some(e => e.id > 10000)
+    })
+
+    isModeDelete: boolean = false;
+
+
     constructor(private _fb: FormBuilder){
         this.formGroup = this._fb.group({
             nameSetOfExercise: new FormControl<string | null>(null, Validators.required),
@@ -64,16 +77,6 @@ export class DragDropBasicDemo implements OnInit {
         this.selectedProducts = [];
         if(localStorage.getItem('setOfExercises')){
             this.setOfExercises = JSON.parse(localStorage.getItem('setOfExercises') as any)
-        }
-
-        try{
-            let odlListOfExercises = localStorage.getItem('ListOfExercises');
-            if(odlListOfExercises){
-                console.log(typeof JSON.parse(odlListOfExercises))
-                this.availableProducts = JSON.parse(odlListOfExercises)
-            }
-        }catch(e){
-            this.availableProducts = listOfExercises
         }
     }
 
@@ -121,8 +124,8 @@ export class DragDropBasicDemo implements OnInit {
 
     findIndex(product: any) {
         let index = -1;
-        for (let i = 0; i < (this.availableProducts as any[]).length; i++) {
-            if (product.id === (this.availableProducts as any[])[i].id) {
+        for (let i = 0; i < (this.availableProducts() as any[]).length; i++) {
+            if (product.id === (this.availableProducts() as any[])[i].id) {
                 index = i;
                 break;
             }
@@ -208,14 +211,20 @@ export class DragDropBasicDemo implements OnInit {
         this.store.dispatch(exercisesActions.openDialogNewExercise())
     }
 
-    deleteExercise(id: number){
+    activateModeDelete(){
+        this.isModeDelete = !this.isModeDelete;
+    }
+
+    dropForDelete(){
         let odlList = localStorage.getItem('ListOfExercises')
 
         if(odlList){
             try{    
                 let odlListOfExercises = JSON.parse(odlList) as Exercise[]
-                let newList = odlListOfExercises.filter(exer => exer.id !== id)
-                localStorage.setItem('ListOfExercises', JSON.stringify(newList))
+                let newList = odlListOfExercises.filter(exer => exer.id !== this.draggedProduct.id)
+                this.store.dispatch(
+                    exercisesActions.saveListExercises({data: newList})
+                )
             }catch(_e){
 
             }

@@ -9,3 +9,5 @@ export interface Exercise{
     name: string,
     zona: string,
 }
+
+export type ExerciseOnList = Omit<Exercise, 'amount'>

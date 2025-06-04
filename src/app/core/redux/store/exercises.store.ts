@@ -1,10 +1,12 @@
-import { ListExercises } from "../../models/exercises.interface";
+import { Exercise, ExerciseOnList, ListExercises } from "../../models/exercises.interface";
 
 export interface ExercisesStore{
-    listOfExcersices: ListExercises | null,
+    setOfExcersices: ListExercises | null,
     listOfExcersicesToDelete: {
         day: number,
         poss: number,
     },
     isOpenNewExercise: boolean,
+    isLoadingListOfExercises: boolean,
+    listOfExercises: ExerciseOnList[]
 }

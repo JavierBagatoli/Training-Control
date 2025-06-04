@@ -10,6 +10,8 @@ import { provideRedux } from '@reduxjs/angular-redux';
 import { store } from './store';
 import { provideStore } from '@ngrx/store';
 import { exercisesReducer } from './core/redux/reducers/exercises.reducers';
+import { ExercesesEffects } from './core/redux/effects/exercises.effects';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,5 +26,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideRedux({ store }),
     provideStore({ exercises: exercisesReducer}),
+    provideEffects(ExercesesEffects),
 ]
 };

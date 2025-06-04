@@ -3,12 +3,14 @@ import { exercisesActions } from '../actions/exercises.action';
 import { ExercisesStore } from '../store/exercises.store';
 
 export const initialState: ExercisesStore = {
-    listOfExcersices: null,
+    setOfExcersices: null,
     listOfExcersicesToDelete: {
         day: -1,
         poss: -1,
     },
     isOpenNewExercise: false,
+    isLoadingListOfExercises: false,
+    listOfExercises: [],
 };
 
 export const exercisesReducer = createReducer(
@@ -21,7 +23,7 @@ export const exercisesReducer = createReducer(
   on(exercisesActions.setListOfExercises, (state, {list}):ExercisesStore => {
     return {
         ...state,
-        listOfExcersices: list
+        setOfExcersices: list
     }
   }),
   on(exercisesActions.deleteListOfExercisesOfDay, (state, {day,poss}):ExercisesStore => {
@@ -44,6 +46,36 @@ export const exercisesReducer = createReducer(
     return {
         ...state,
         isOpenNewExercise: false
+    }
+  }),
+
+  on(exercisesActions.saveListExercises, (state, {data}):ExercisesStore => {
+    return {
+        ...state,
+        isLoadingListOfExercises: true,
+        listOfExercises:data
+    }
+  }),
+
+  on(exercisesActions.saveListExercisesComplete, (state):ExercisesStore => {
+    return {
+        ...state,
+        isLoadingListOfExercises: false
+    }
+  }),
+
+  on(exercisesActions.loadListExercisesComplete, (state, {data}):ExercisesStore => {
+    return {
+        ...state,
+        isLoadingListOfExercises: true,
+        listOfExercises: data
+    }
+  }),
+  on(exercisesActions.loadListExercisesComplete, (state, {data}):ExercisesStore => {
+    return {
+        ...state,
+        isLoadingListOfExercises: false,
+        listOfExercises: data
     }
   }),
 )

@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DragDropBasicDemo } from "./core/component/drag-and-drop/drag-and-drop.component";
 import { Store } from '@ngrx/store';
-import { selectIsOpenDialogNewExercise, selectListSelected, selectListSelectedToDelete } from './core/redux/selectors/exercises.selectors';
+import { selectIsOpenDialogNewExercise, selectIsSavingListOfExercises, selectListSelected, selectListSelectedToDelete } from './core/redux/selectors/exercises.selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ExercisesStore } from './core/redux/store/exercises.store';
 import { Exercise, ListExercises } from './core/models/exercises.interface';
@@ -13,6 +13,7 @@ import { SectionThreeButtonsComponent } from "./core/component/section-three-but
 import { TableOfDaysWithExercisesComponent } from "./core/component/table-of-days-with-exercises/table-of-days-with-exercises.component";
 import { FormNewExerciseComponent } from "./core/component/form-new-exercise/form-new-exercise.component";
 import { listOfExercises } from './store/list-of-exercises';
+import { exercisesActions } from './core/redux/actions/exercises.action';
 
 @Component({
   selector: 'app-root',
@@ -34,13 +35,13 @@ export class AppComponent implements OnInit {
 
   title = 'excersice-app';
   weeks : {id: number, name: string,  activity: ListExercises[]}[]= [
-    {id: 0, name: "Domingo",  activity:[]},
-    {id: 1, name: "Lunes",    activity:[]},
+    {id: 0, name: "Lunes",    activity:[]},
     {id: 2, name: "Martes",   activity:[]},
     {id: 3, name: "Miercoles",activity:[]},
     {id: 4, name: "Jueves",   activity:[]},
     {id: 5, name: "Viernes",  activity:[]},
     {id: 6, name: "Sabado",   activity:[]},
+    {id: 7, name: "Domingo",  activity:[]},
   ];
   idDaySelected: number = -1;
 
@@ -51,7 +52,7 @@ export class AppComponent implements OnInit {
   isMobile: boolean = false;
   pageNumber: 0 | 1 = 0;
   listOfDayCellphone: number[] = [0,1]
-  reloadList: boolean = false;
+  reloadList : boolean = false
 
   constructor(@Inject(DOCUMENT) document: Document, private breakpointObserver: BreakpointObserver,) {
     this.breakpointObserver.observe([
@@ -67,6 +68,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
       const persistencia : string | null | undefined = localStorage.getItem('calendario');   
+
+      this.store.dispatch(
+        exercisesActions.loadListExercises()
+      )
+
+      this.store.select(selectIsSavingListOfExercises).subscribe(val => {
+        if(val){
+          this.reloadList = true;
+          setTimeout(() => {
+            this.reloadList = false;
+          },1)
+        }
+      })
 
       if(persistencia){
         this.weeks = JSON.parse(persistencia);
@@ -116,13 +130,11 @@ export class AppComponent implements OnInit {
 
     if(odlListOfExercises){
       let newList = JSON.parse(odlListOfExercises)
-      console.log(newList, "aaa")
       newList.push($event)
-      localStorage.setItem('ListOfExercises', JSON.stringify(newList))
-      this.reloadList = true;
-      setTimeout(() => {
-        this.reloadList = false;
-      },1)
+
+      this.store.dispatch(
+        exercisesActions.saveListExercises({data: newList})
+      );
     }
   }
 }
